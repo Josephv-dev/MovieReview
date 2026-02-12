@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/windowBackground">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/submitBtn"> <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#4B2FBF"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="MOVIE REVIEW"
+            android:textColor="#FFEB3B"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Enter Movie Name:"
+            android:textColor="#212121"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type name here..."
+            android:padding="15dp"
+            android:textColor="#212121" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Select Genre:"
+            android:textColor="#212121" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/spinner_bg" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Your Rating:"
+            android:textColor="#212121" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:numStars="5"
+            android:progressBackgroundTint="#CCCCCC"
+            android:progressTint="#FFC107"
+            android:stepSize="0.5" />
+
+        <LinearLayout
+            android:id="@+id/savedMoviesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Saved Reviews"
+                android:textColor="#212121"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:backgroundTint="#6200EE"
+        android:text="SUBMIT REVIEW"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>
