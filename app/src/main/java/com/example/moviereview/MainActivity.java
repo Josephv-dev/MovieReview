@@ -64,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
                 TextView movieEntry = new TextView(this);
                 movieEntry.setText("🎬" + movieName + " ("+ genreChoice +") - " + ratingValue +"stars");
                 movieEntry.setTextSize(18);
-                movieEntry.setTextColor(getResources().getColor(R.color.main_text, getTheme()));
+                // This tells the code: "Go get the Primary Text color defined in the current theme"
+                int themeTextColor = com.google.android.material.color.MaterialColors.getColor(this, android.R.attr.textColorPrimary, android.graphics.Color.BLACK);
+                movieEntry.setTextColor(themeTextColor);
                 savedContainer.addView(movieEntry);
                 movieInput.setText("");
                 ratingBar.setRating(0);
