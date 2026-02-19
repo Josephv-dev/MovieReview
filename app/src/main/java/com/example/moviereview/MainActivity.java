@@ -1,5 +1,6 @@
 package com.example.moviereview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import android.content.SharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     EditText movieInput;
     Spinner genre;
     RatingBar ratingBar;
-    Button submitBtn;
+    Button submitBtn, viewBtn;
     LinearLayout savedContainer;
 
     String movieName, genreChoice;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.ratingBar);
         submitBtn = findViewById(R.id.submitBtn);
         savedContainer = findViewById(R.id.savedMoviesContainer);
+        viewBtn = findViewById(R.id.viewBtn);
 
         String[] options = {"Action","Horror","Drama","Comedy","Romance","Sci-fi"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -57,20 +60,48 @@ public class MainActivity extends AppCompatActivity {
             genreChoice = genre.getSelectedItem().toString();
             ratingValue = ratingBar.getRating();
 
-            if(movieName.equalsIgnoreCase("")){
+            if(movieName.isEmpty()){
                 Toast.makeText(this, "Please enter a movie name", Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(this, "Review Save Successful", Toast.LENGTH_SHORT).show();
-                TextView movieEntry = new TextView(this);
-                movieEntry.setText("🎬" + movieName + " ("+ genreChoice +") - " + ratingValue +"stars");
-                movieEntry.setTextSize(18);
+                saveMovieData(movieName, genreChoice, ratingValue);
                 // This tells the code: "Go get the Primary Text color defined in the current theme"
-                int themeTextColor = com.google.android.material.color.MaterialColors.getColor(this, android.R.attr.textColorPrimary, android.graphics.Color.BLACK);
-                movieEntry.setTextColor(themeTextColor);
-                savedContainer.addView(movieEntry);
+                addMovieToDisplay(movieName, genreChoice, ratingValue);
                 movieInput.setText("");
                 ratingBar.setRating(0);
             }
         });
+
+        viewBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ViewReviewsActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    //This Method help to save the data
+    private void saveMovieData(String name, String genre, float rating){
+        SharedPreferences pref = getSharedPreferences("MoviePrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        String fullReview = "🎬" + name + " ("+ genre +") - " + rating +"stars";
+
+        String existingHistory = pref.getString("history", "");
+
+        String updatedHistory;
+        if (existingHistory.isEmpty()) {
+            updatedHistory = fullReview;
+        } else {
+            updatedHistory = existingHistory + "\n" + fullReview;
+        }
+
+        editor.putString("History", updatedHistory);
+        editor.apply();
+        Toast.makeText(this, "Review Saved", Toast.LENGTH_SHORT).show();
+    }
+
+    private void addMovieToDisplay(String name, String genre, float rating){
+        TextView movieEntry = new TextView(this);
+        movieEntry.setText("🎬" + name + " ("+ genre +") - " + "⭐" + rating +"stars");
+        movieEntry.setTextSize(18);
+        savedContainer.addView(movieEntry);
     }
 }
